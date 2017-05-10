@@ -29,8 +29,29 @@
 }
 
 - (IBAction)handleGreetingButtonClick:(id)sender {
-    NSString *greetingString = [NSString stringWithFormat:@"Hello, %@ %@", self.firstNameTextField.text, self.lastNameTextField.text];
-    [self.greetingButton setTitle:greetingString forState:UIControlStateNormal];
+    [self.greetingButton setTitle:[self greetingString] forState:UIControlStateNormal];
+}
+
+- (NSMutableString *)greetingString {
+    NSMutableString *greetingString = [NSMutableString stringWithFormat:@"Hello"];
+    NSString *firstName = ([self.firstNameTextField hasText]) ? self.firstNameTextField.text : nil;
+    NSString *lastName = ([self.lastNameTextField hasText]) ? self.lastNameTextField.text : nil;
+    
+    if (!firstName && !lastName) {
+        return greetingString;
+    }
+    
+    [greetingString appendString:@","];
+    
+    if (firstName) {
+        [greetingString appendString:[NSString stringWithFormat:@" %@", firstName]];
+    }
+    
+    if (lastName) {
+        [greetingString appendString:[NSString stringWithFormat:@" %@", lastName]];
+    }
+    
+    return greetingString;
 }
 
 
